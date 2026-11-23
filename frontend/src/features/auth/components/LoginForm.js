@@ -7,7 +7,7 @@ import { login } from "../api";
 import { validateLogin } from "../validation";
 
 const inputClass =
-  "w-full rounded-md border border-border bg-surface px-3 py-2 text-text placeholder:text-text-muted/70 focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30 aria-invalid:border-danger";
+  "h-14 w-full rounded-full border border-white/10 bg-white/[0.08] px-6 text-[15px] text-white placeholder:text-white/40 transition-colors focus:border-white/50 focus:bg-white/[0.12] focus:outline-none aria-invalid:border-red-400/70";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -42,15 +42,18 @@ export default function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
+    <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-3">
       {formError && (
-        <p role="alert" className="rounded-md border border-danger/40 bg-danger/10 px-3 py-2 text-sm text-danger">
+        <p
+          role="alert"
+          className="rounded-2xl border border-red-400/30 bg-red-500/10 px-5 py-3 text-center text-sm text-red-300"
+        >
           {formError}
         </p>
       )}
 
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="email" className="text-sm font-medium text-text">
+        <label htmlFor="email" className="sr-only">
           Email address
         </label>
         <input
@@ -58,7 +61,7 @@ export default function LoginForm() {
           name="email"
           type="email"
           autoComplete="email"
-          placeholder="you@example.com"
+          placeholder="Email address"
           value={values.email}
           onChange={handleChange}
           aria-invalid={Boolean(errors.email)}
@@ -66,14 +69,14 @@ export default function LoginForm() {
           className={inputClass}
         />
         {errors.email && (
-          <p id="email-error" className="text-sm text-danger">
+          <p id="email-error" className="px-6 text-sm text-red-400">
             {errors.email}
           </p>
         )}
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="password" className="text-sm font-medium text-text">
+        <label htmlFor="password" className="sr-only">
           Password
         </label>
         <div className="relative">
@@ -82,24 +85,24 @@ export default function LoginForm() {
             name="password"
             type={showPassword ? "text" : "password"}
             autoComplete="current-password"
-            placeholder="Enter your password"
+            placeholder="Password"
             value={values.password}
             onChange={handleChange}
             aria-invalid={Boolean(errors.password)}
             aria-describedby={errors.password ? "password-error" : undefined}
-            className={`${inputClass} pr-16`}
+            className={`${inputClass} pr-20`}
           />
           <button
             type="button"
             onClick={() => setShowPassword((v) => !v)}
             aria-label={showPassword ? "Hide password" : "Show password"}
-            className="absolute inset-y-0 right-0 px-3 text-sm font-medium text-primary hover:text-primary-hover"
+            className="absolute inset-y-0 right-0 rounded-r-full px-6 text-sm font-medium text-white/60 transition-colors hover:text-white"
           >
             {showPassword ? "Hide" : "Show"}
           </button>
         </div>
         {errors.password && (
-          <p id="password-error" className="text-sm text-danger">
+          <p id="password-error" className="px-6 text-sm text-red-400">
             {errors.password}
           </p>
         )}
@@ -108,9 +111,9 @@ export default function LoginForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="mt-1 rounded-md bg-primary px-4 py-2.5 font-medium text-primary-contrast transition-colors hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-3 h-14 rounded-full bg-white text-[15px] font-semibold text-black transition hover:bg-white/90 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {submitting ? "Logging in…" : "Log in"}
+        {submitting ? "Logging in…" : "Continue"}
       </button>
     </form>
   );
