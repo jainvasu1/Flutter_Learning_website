@@ -11,7 +11,11 @@ const inputClass =
 
 export default function LoginForm() {
   const router = useRouter();
-  const [values, setValues] = useState({ email: "", password: "" });
+  // Boxes start pre-filled with the one allowed account (from .env.local).
+  const [values, setValues] = useState({
+    email: process.env.NEXT_PUBLIC_LOGIN_EMAIL ?? "",
+    password: process.env.NEXT_PUBLIC_LOGIN_PASSWORD ?? "",
+  });
   const [errors, setErrors] = useState({});
   const [formError, setFormError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
