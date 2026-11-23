@@ -2,11 +2,13 @@
 
 import { useEffect, useRef } from "react";
 
-const SIZE = 240; // CSS pixels (square canvas)
-const GRID = 14; // characters per row/column in the block
-const FONT_SIZE = 9; // px
+// Drawing happens in a fixed 400×400 coordinate space; CSS scales the canvas
+// to whatever width its container gives it.
+const SIZE = 400;
+const GRID = 16; // characters per row/column in the block
+const FONT_SIZE = 13; // px, in drawing space
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-const REPEL_RADIUS = 50;
+const REPEL_RADIUS = 80;
 const CYCLE_SPEED = 0.55; // how fast the block scatters and re-forms
 
 const easeInOut = (x) => x * x * (3 - 2 * x);
@@ -87,14 +89,14 @@ export default function ParticleMark() {
         const scatterX = center + Math.cos(scatterAngle) * p.scatterDistance;
         const scatterY = center + Math.sin(scatterAngle) * p.scatterDistance;
 
-        let x = p.homeX + (scatterX - p.homeX) * spread + Math.sin(t * 1.3 + p.phase) * 1.5;
-        let y = p.homeY + (scatterY - p.homeY) * spread + Math.cos(t * 1.1 + p.phase) * 1.5;
+        let x = p.homeX + (scatterX - p.homeX) * spread + Math.sin(t * 1.3 + p.phase) * 2.5;
+        let y = p.homeY + (scatterY - p.homeY) * spread + Math.cos(t * 1.1 + p.phase) * 2.5;
 
         const dx = x - pointer.x;
         const dy = y - pointer.y;
         const dist = Math.hypot(dx, dy);
         if (dist < REPEL_RADIUS && dist > 0) {
-          const push = (1 - dist / REPEL_RADIUS) * 18;
+          const push = (1 - dist / REPEL_RADIUS) * 30;
           x += (dx / dist) * push;
           y += (dy / dist) * push;
         }
@@ -109,9 +111,10 @@ export default function ParticleMark() {
     }
 
     function handlePointerMove(event) {
+      // Convert from on-screen pixels to the 400×400 drawing space.
       const rect = canvas.getBoundingClientRect();
-      pointer.x = event.clientX - rect.left;
-      pointer.y = event.clientY - rect.top;
+      pointer.x = ((event.clientX - rect.left) / rect.width) * SIZE;
+      pointer.y = ((event.clientY - rect.top) / rect.height) * SIZE;
     }
     function handlePointerLeave() {
       pointer.x = -999;
@@ -133,8 +136,7 @@ export default function ParticleMark() {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      style={{ width: SIZE, height: SIZE }}
-      className="touch-none"
+      className="aspect-square h-auto w-full touch-none"
     />
   );
 }

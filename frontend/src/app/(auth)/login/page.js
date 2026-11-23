@@ -9,29 +9,37 @@ export const viewport = {
   themeColor: "#000000",
 };
 
+/**
+ * Split layout from 768px up: animation on the left, login form on the right.
+ * On phones the two halves stack, animation on top.
+ */
 export default function LoginPage() {
   return (
-    <main className="flex flex-1 flex-col items-center bg-black px-5 pb-8 pt-10 text-white [color-scheme:dark]">
-      <div className="flex w-full max-w-sm flex-1 flex-col">
-        {/* Animated visual */}
-        <div className="flex min-h-56 flex-1 items-center justify-center py-8">
+    <main className="flex flex-1 flex-col justify-center bg-black py-10 text-white [color-scheme:dark] md:flex-row md:py-0">
+      {/* Left: animated visual */}
+      <section className="flex items-center justify-center px-5 md:flex-1 md:border-r md:border-white/10 md:bg-white/[0.02] md:p-10 lg:p-12">
+        <div className="w-60 sm:w-72 md:w-full md:max-w-[440px]">
           <ParticleMark />
         </div>
+      </section>
 
-        {/* Heading */}
-        <div className="mb-8 text-center">
-          <h1 className="text-5xl font-semibold tracking-tight">Welcome</h1>
-          <p className="mt-3 text-base text-white/55">Your Flutter journey starts from here</p>
+      {/* Right: heading + email/password form */}
+      <section className="flex items-center justify-center px-5 pt-6 md:flex-1 md:px-8 md:py-10 lg:px-12">
+        <div className="w-full max-w-sm">
+          <div className="mb-8 text-center md:text-left">
+            <h1 className="text-5xl font-semibold tracking-tight">Welcome</h1>
+            <p className="mt-3 text-base text-white/55">Your Flutter learning journey starts here</p>
+          </div>
+
+          <LoginForm />
+
+          <p className="mt-8 text-center text-xs leading-relaxed text-white/40 md:text-left">
+            By pressing “Continue” you agree to our
+            <br />
+            Terms of Service and Privacy Policy
+          </p>
         </div>
-
-        <LoginForm />
-
-        <p className="mt-8 text-center text-xs leading-relaxed text-white/40">
-          By pressing “Continue” you agree to our
-          <br />
-          Terms of Service and Privacy Policy
-        </p>
-      </div>
+      </section>
     </main>
   );
 }
