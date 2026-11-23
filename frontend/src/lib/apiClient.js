@@ -1,4 +1,5 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000/api";
+// "/api" is proxied to the backend by next.config.mjs, so this works from any device.
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "/api";
 
 /**
  * Small fetch wrapper for the backend API.
