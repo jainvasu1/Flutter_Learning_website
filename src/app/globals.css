@@ -1,0 +1,142 @@
+@import "tailwindcss";
+
+/* ==========================================================
+   Design tokens
+   Raw values live on :root so they can switch per theme.
+   Components should use the Tailwind utilities generated
+   from @theme below (bg-surface, text-muted, border-border…).
+   ========================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* Surfaces */
+  --bg: #f6f8fb;
+  --surface: #ffffff;
+  --surface-muted: #eef2f7;
+  --border: #d9e0ea;
+
+  /* Text */
+  --text: #0e1726;
+  --text-muted: #5a6678;
+
+  /* Brand */
+  --primary: #0b63c9;
+  --primary-hover: #0952a8;
+  --primary-contrast: #ffffff;
+  --accent: #0e8f86;
+
+  /* Feedback */
+  --success: #1a7f4b;
+  --warning: #a86200;
+  --danger: #c2362b;
+
+  /* Focus ring */
+  --ring: #0b63c9;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    --bg: #0e1726;
+    --surface: #152033;
+    --surface-muted: #1c2a40;
+    --border: #2a3a54;
+
+    --text: #e8edf5;
+    --text-muted: #9aa8bd;
+
+    --primary: #5aa9ff;
+    --primary-hover: #82bfff;
+    --primary-contrast: #0e1726;
+    --accent: #3cc8bd;
+
+    --success: #4cc38a;
+    --warning: #f0a845;
+    --danger: #ff6b5e;
+
+    --ring: #5aa9ff;
+  }
+}
+
+@theme inline {
+  /* Colors -> bg-*, text-*, border-* utilities */
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-contrast: var(--primary-contrast);
+  --color-accent: var(--accent);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-ring: var(--ring);
+
+  /* Typography (system stacks: no network fetch, fast first paint) */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Code", Menlo, Consolas,
+    "Liberation Mono", monospace;
+
+  /* Radius scale */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+}
+
+/* ==========================================================
+   Base layer
+   ========================================================== */
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  code, kbd, pre, samp {
+    font-family: var(--font-mono);
+    font-size: 0.925em;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-primary) 25%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
